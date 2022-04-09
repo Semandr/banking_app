@@ -1,1 +1,167 @@
+:root {
+  // colors
+  --white: rgb(255, 255, 255);
+  --white-2: rgb(243, 243, 243);
+  --white-3: rgba(255, 255, 255, 0.4);
+  --white-4: rgba(255, 255, 255, 0.6);
+  --white-5: rgba(255, 255, 255, 0.8);
+  --grey-1: rgb(238, 238, 238);
+  --grey-2: rgb(204, 204, 204);
+  --grey-3: rgb(187, 187, 187);
+  --grey-4: rgb(136, 136, 136);
+  --grey-5: rgb(119, 119, 119);
+  --grey-6: rgb(102, 102, 102);
+  --grey-7: rgb(51, 51, 51);
+  --green-1: rgb(155, 225, 93);
+  --green-2: rgb(102, 200, 115);
+  --green-3: rgb(57, 179, 133);
+  --red-1: rgb(255, 88, 95);
+  --red-2: rgb(229, 42, 90);
+  --red-3: rgb(245, 70, 93);
+  --yellow-1: rgb(255, 203, 3);
+  --yellow-2: rgb(255, 176, 3);
+}
+.wrapper {
+}
+.header {
+}
+.nav {
+}
+.title {
+  &__welcome {
+  }
 
+  &__secondary {
+  }
+}
+.logo {
+}
+.form {
+  &__login {
+  }
+
+  &__transfer {
+  }
+
+  &__loan {
+  }
+
+  &__close {
+  }
+}
+.login {
+  &__user {
+  }
+
+  &__pin {
+  }
+}
+.input {
+}
+.btn {
+  &__login {
+  }
+
+  &__sort {
+  }
+}
+.app {
+}
+.balance {
+  &__container {
+  }
+
+  &__label {
+  }
+
+  &__date {
+  }
+
+  &__value {
+  }
+}
+.date {
+}
+.movements {
+  &__row {
+  }
+
+  &__type {
+    &_deposit {
+    }
+
+    &_withdrawal {
+    }
+  }
+
+  &__date {
+  }
+
+  &__value {
+  }
+}
+.summary {
+  &__label {
+  }
+
+  &__value {
+    &_in {
+    }
+
+    &_out {
+    }
+
+    &_interest {
+    }
+  }
+}
+.operation {
+  &__transfer {
+  }
+
+  &__loan {
+  }
+
+  &__close {
+  }
+}
+.transfer {
+  &__to {
+  }
+
+  &__amount {
+  }
+
+  &__btn {
+  }
+
+  &__label {
+  }
+}
+.loan {
+  &__amount {
+  }
+
+  &__btn {
+  }
+
+  &__lable {
+  }
+}
+.close {
+  &__user {
+  }
+
+  &__pin {
+  }
+
+  &__btn {
+  }
+
+  &__label {
+  }
+}
+.logout {
+  &__timer {
+  }
+}
