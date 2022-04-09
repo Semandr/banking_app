@@ -4,8 +4,96 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/main.min.css" />
+    <script src="scripts/app.js" defer></script>
     <title>Banking App</title>
   </head>
-  <body></body>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+          <h1 class="title title__welcome">Log in to get started</h1>
+          <img src="./images/logo.png" alt="Logo" class="logo" />
+          <form class="form form__login login">
+            <input type="text" placeholder="User" class="input login__user" />
+            <input type="password" placeholder="PIN" class="input login__pin" />
+            <button class="btn btn__login"></button>
+          </form>
+        </nav>
+      </header>
+      <main class="app">
+        <!-- BALANCE -->
+        <div class="balance">
+          <div class="balance__container">
+            <p class="balance__label">Current balance</p>
+            <p class="balance__date">As of <span class="date"></span></p>
+          </div>
+          <p class="balance__value"></p>
+        </div>
+        <!-- MOVEMENTS -->
+        <ul class="movements">
+          <li class="movements__row">
+            <div class="movements__type movements__type_deposit">2 deposits</div>
+            <div class="movements__date">3 days ago</div>
+            <div class="movements__value">4 000 €</div>
+          </li>
+          <li class="movements__row">
+            <div class="movements__type movements__type_withdrawal">1 withdrawal</div>
+            <div class="movements__date">01/01/2050</div>
+            <div class="movements__value">-1 000 €</div>
+          </li>
+       
+        <!-- SUMMARY -->
+        <div class="summary">
+          <p class="summary__label">In</p>
+          <p class="summary__value summary__value_in">0000€</p>
+          <p class="summary__label">Out</p>
+          <p class="summary__value summary__value_out">0000€</p>
+          <p class="summary__label">Interest</p>
+          <p class="summary__value summary__value_interest">0000€</p>
+          <button class="btn btn__sort">&downarrow; SORT</button>
+        </div>
+        <!-- OPERATION: TRANSFERS -->
+        <div class="operation operation__transfer">
+          <h2 class="title title__secondary">Transfer money</h2>
+          <form class="form form__transfer transfer">
+            <input type="text" class="transfer__to" />
+            <input type="number" class="transfer__amount" />
+            <button class="transfer__btn">&rarr;</button>
+            <label class="transfer__label">Transfer to</label>
+            <label class="transfer__label">Amount</label>
+          </form>
+        </div>
+        <!-- OPERATION: LOAN -->
+        <div class="operation operation__loan">
+          <h2 class="title title__secondary">Request loan</h2>
+          <form class="form form__loan loan">
+            <input type="number" class="loan__amount" />
+            <button class="loan__btn">&rarr;</button>
+            <label class="loan__lable">Amount</label>
+          </form>
+        </div>
+        <!-- OPERATION: CLOSE -->
+        <div class="operation operation__close">
+          <h2>Close account</h2>
+          <form class="form form__close close">
+            <input type="text" class="close__user" />
+            <input type="password" maxlength="6" class="close__pin" />
+            <button class="close__btn">&rarr;</button>
+            <label class="close__label">Confirm user</label>
+            <label class="close__label">Confirm PIN</label>
+          </form>
+        </div>
+        <!-- LOGOUT TIMER -->
+        <p class="logout">You will be logged out in <span class="logout__timer">05:00</span>
+        </p>
+      </main>
+    </div>
+  </body>
 </html>
