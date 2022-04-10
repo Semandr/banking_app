@@ -21,147 +21,265 @@
   --yellow-1: rgb(255, 203, 3);
   --yellow-2: rgb(255, 176, 3);
 }
-.wrapper {
+// BASE
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+html {
+  font-size: 64.5%;
+}
+body {
+  font-family: 'Poppins', sans-seri;
+  background: var(--white-2);
+  color: var(--grey-7);
+  font-weight: 500;
+}
+ul {
+  list-style: none;
+}
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: inherit;
+}
+.wrapper {
+  overflow: hidden;
+  min-height: 100vh;
+  padding: 3rem 8rem;
+}
+// Header
 .header {
+  margin-bottom: 4rem;
 }
 .nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
 }
 .title {
+  font-weight: 500;
+  letter-spacing: 0.5px;
   &__welcome {
+    font-size: 2rem;
   }
-
   &__secondary {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
   }
 }
 .logo {
+  height: 5rem;
 }
+// Form
 .form {
+  display: grid;
+  grid-template-columns: repeat(2, 2.5fr) 1fr;
+  grid-template-rows: repeat(2, auto);
+  gap: 0.4rem 1rem;
+  align-items: center;
   &__login {
+    display: flex;
+    gap: 1rem;
   }
-
-  &__transfer {
-  }
-
+  &__transfer,
+  &__close,
   &__loan {
-  }
-
-  &__close {
-  }
-}
-.login {
-  &__user {
-  }
-
-  &__pin {
+    display: grid;
+    grid-template-columns: repeat(2, 2.5fr) 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
   }
 }
 .input {
+  border: none;
+  padding: 0.5rem 2rem;
+  font-size: 1.6rem;
+  text-align: center;
+  max-width: 12rem;
+  border-radius: 10rem;
+  border: 1px solid var(--white);
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border: 1px solid var(--grey-3);
+  }
+  &::placeholder {
+    color: var(--grey-4);
+  }
 }
 .btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
   &__login {
+    font-size: 2.2rem;
+    &:focus,
+    &:hover {
+      outline: none;
+      color: var(--grey-5);
+    }
   }
 
   &__sort {
+    margin-left: auto;
+    font-size: 1.3rem;
+    cursor: pointer;
+    font-weight: 600;
+    padding-right: 2rem;
+  }
+  &__operation {
+    border: none;
+    border-radius: 0.7rem;
+    font-size: 1.8rem;
+    background: var(--white);
+    cursor: pointer;
+    padding: 0.3rem 1rem;
   }
 }
 .app {
+  position: relative;
+  max-width: 100rem;
+  display: grid;
+  grid-template-columns: 4fr 3fr;
+  grid-template-rows: auto repeat(3, 15rem) auto;
+  gap: 2rem;
+  transition: all 0.8s ease;
 }
 .balance {
-  &__container {
-  }
+  grid-column: 1 / span 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
 
   &__label {
+    font-size: 2.2rem;
+    font-weight: 500;
   }
 
   &__date {
+    font-size: 1.4rem;
+    color: var(--grey-6);
   }
 
   &__value {
+    font-size: 4.5rem;
   }
 }
-.date {
-}
 .movements {
+  grid-row: 2 / span 3;
+  background: var(--white);
+  overflow-y: scroll;
+  border-radius: 1rem;
   &__row {
+    padding: 2.25rem 4rem;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--grey-1);
   }
 
   &__type {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: var(--white);
+    padding: 0.1rem 1rem;
+    border-radius: 10rem;
+    margin-right: 2rem;
+
     &_deposit {
+      background: linear-gradient(to top left, var(--green-3), var(--green-1));
     }
 
     &_withdrawal {
+      background: linear-gradient(to top left, var(--red-3), var(--red-1));
     }
   }
 
   &__date {
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    color: var(--grey-5);
   }
 
   &__value {
+    font-size: 1.7rem;
+    margin-left: auto;
   }
 }
 .summary {
+  grid-row: 5/6;
+  display: flex;
+  align-items: baseline;
+  padding: 0 0.3rem;
   &__label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin-right: 0.8rem;
   }
 
   &__value {
-    &_in {
-    }
-
-    &_out {
-    }
-
+    font-size: 2.2rem;
+    margin-right: 2.5rem;
+    &_in,
     &_interest {
+      color: var(--green-2);
+    }
+    &_out {
+      color: var(--red-2);
     }
   }
 }
 .operation {
+  border-radius: 1rem;
+  padding: 3rem 4rem;
+  color: var(--grey-7);
+
+  &__input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: var(--white-2);
+    font-size: 1.5rem;
+    text-align: center;
+    color: var(--grey-6);
+    padding: 0.3rem 1rem;
+    border-radius: 0.7rem;
+    outline: none;
+  }
+
   &__transfer {
+    background: linear-gradient(to top left, var(--yellow-2), var(--yellow-1));
   }
 
   &__loan {
+    background: linear-gradient(to top left, var(--green-3), var(--green-1));
   }
 
   &__close {
+    background: linear-gradient(to top left, var(--red-3), var(--red-1));
   }
 }
-.transfer {
-  &__to {
-  }
-
-  &__amount {
-  }
-
-  &__btn {
-  }
-
-  &__label {
-  }
-}
-.loan {
-  &__amount {
-  }
-
-  &__btn {
-  }
-
-  &__lable {
-  }
-}
-.close {
-  &__user {
-  }
-
-  &__pin {
-  }
-
-  &__btn {
-  }
-
-  &__label {
-  }
+.transfer__label,
+.loan__label,
+.close__label {
+  font-size: 1.4rem;
 }
 .logout {
+  margin-top: 1rem;
+  text-align: right;
+  font-size: 1.25rem;
+  padding: 0 0.3rem;
   &__timer {
+    font-weight: 600;
   }
 }
