@@ -154,6 +154,7 @@ a:active {
   grid-template-rows: auto repeat(3, 15rem) auto;
   gap: 2rem;
   transition: all 0.8s ease;
+  margin: 0 auto;
 }
 .balance {
   grid-column: 1 / span 2;
@@ -274,6 +275,16 @@ a:active {
 .close__label {
   font-size: 1.4rem;
 }
+.loan {
+  &__btn {
+    max-width: 5rem;
+    justify-self: center;
+  }
+  &__label {
+    grid-row: 2/3;
+  }
+}
+
 .logout {
   margin-top: 1rem;
   text-align: right;
