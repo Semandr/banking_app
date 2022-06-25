@@ -61,6 +61,23 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+//////
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = ``;
+  movements.forEach((mov, i) => {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+    const html = `
+    <li class="movements__row">
+      <div class="movements__type movements__type_${type}">
+        ${i + 1} ${type}
+      </div>
+      <div class="movements__value">${mov} €</div>
+    </li>`;
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+displayMovements(account1.movements);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -173,8 +190,6 @@ movements.forEach((mov, i, arr) => {
 });
 
 
-*/
-
 //
 // FOREACH METHOD with MAPS and SETS
 /////////////////////////////
@@ -204,3 +219,20 @@ currenciesUnique.forEach((value, _, map) => {
 // USD: USD
 // app.js:199 GBP: GBP
 // app.js:199 EUR: EUR
+
+*/
+
+// Challenge 1
+function checkDogs(arr1, arr2) {
+  const dogs = arr1.slice(1, -2).concat(arr2);
+  dogs.forEach((dog, i, arr) => {
+    const isAdult =
+      dog >= 3
+        ? `is an adult 🐕 and have ${dog} years old`
+        : `is still a puppy 🐶`;
+    console.log(`Dog number ${i + 1} ${isAdult}`);
+  });
+}
+checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
+console.log(`------- next call ------`);
+checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
