@@ -71,7 +71,7 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 // let arr = ['a', 'b', 'c', 'd', 'e'];
@@ -124,7 +124,7 @@ console.log([...arr, ...arr2]); // same result - ['a', 'b', 'c', 'd', 'e', 'f', 
 /////////////////////////////
 // just for sake of completeon (ради завершения)
 console.log(letters.join(' - ')); // a - b - c - d - e - f - g - h - i - j (string)
-*/
+
 
 //
 // AT METHOD
@@ -144,3 +144,30 @@ console.log(arr.at(-2)); // 54 - value
 // This method is also works with STRINGS
 console.log('Andriy'.at()); // 'A' - as a string
 console.log('Andriy'.at(-1)); // 'y' - as a string
+
+*/
+
+//
+// FOREACH METHOD
+/////////////////////////////
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// Classic method
+// for (const movement of movements) {
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${movement}`);
+  } else {
+    // Math.abc() -> removing the '-' (minus) sign
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(movement)}`);
+  }
+}
+console.log('------- forEach() -------');
+movements.forEach((mov, i, arr) => {
+  if (mov > 0) {
+    console.log(`Movement ${i + 1}: You deposited ${mov}`);
+  } else {
+    // Math.abc() -> removing the '-' (minus) sign
+    console.log(`Movement ${i + 1}: You withdrew ${Math.abs(mov)}`);
+  }
+});
