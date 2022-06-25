@@ -74,7 +74,7 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
-let arr = ['a', 'b', 'c', 'd', 'e'];
+// let arr = ['a', 'b', 'c', 'd', 'e'];
 
 // SLICE METHOD
 /////////////////////////////
@@ -100,6 +100,7 @@ let arr = ['a', 'b', 'c', 'd', 'e'];
 // console.log(arr.splice(1, 2)); // deleted elements - ['b', 'c']
 // console.log(arr); // remaining elements - ['a', 'd', 'e']
 
+/*
 //
 // REVERSE METHOD
 /////////////////////////////
@@ -123,3 +124,23 @@ console.log([...arr, ...arr2]); // same result - ['a', 'b', 'c', 'd', 'e', 'f', 
 /////////////////////////////
 // just for sake of completeon (ради завершения)
 console.log(letters.join(' - ')); // a - b - c - d - e - f - g - h - i - j (string)
+*/
+
+//
+// AT METHOD
+/////////////////////////////
+const arr = [77, 54, 22];
+console.log(arr[0]); // 77
+console.log(arr.at(0)); // 77
+console.log(arr.at()); // 77
+
+console.log(arr[arr.length - 1]); // 22 - last element
+console.log(arr.slice(-1)); // [22] - array with last element
+console.log(arr.slice(-1)[0]); // 22 - last element/value
+
+console.log(arr.at(-1)); // 22 - last element/value
+console.log(arr.at(-2)); // 54 - value
+
+// This method is also works with STRINGS
+console.log('Andriy'.at()); // 'A' - as a string
+console.log('Andriy'.at(-1)); // 'y' - as a string
