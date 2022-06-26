@@ -39,9 +39,9 @@ const accounts = [account1, account2, account3, account4];
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
-const labelSumIn = document.querySelector('.summary__value--in');
-const labelSumOut = document.querySelector('.summary__value--out');
-const labelSumInterest = document.querySelector('.summary__value--interest');
+const labelSumIn = document.querySelector('.summary__value_in');
+const labelSumOut = document.querySelector('.summary__value_out');
+const labelSumInterest = document.querySelector('.summary__value_interest');
 const labelTimer = document.querySelector('.timer');
 
 const containerApp = document.querySelector('.app');
@@ -78,6 +78,39 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+const calcAndDisplayBalance = function (movements) {
+  const balance = movements.reduce(
+    (accumulator, movement) => accumulator + movement,
+    0
+  );
+  labelBalance.textContent = `${balance} €`;
+};
+calcAndDisplayBalance(account1.movements);
+
+const calcAndDisplaySummary = function (movements) {
+  const income = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  const outcome = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    // .filter((int, i, arr) => {
+    //   console.log(arr);
+    //   return int >= 1;
+    // })
+    .filter((int, i, arr) => int >= 1)
+    .reduce((acc, interest) => acc + interest, 0);
+  labelSumIn.textContent = `${income} €`;
+  labelSumOut.textContent = `${outcome} €`;
+  labelSumInterest.textContent = `${interest} €`;
+};
+calcAndDisplaySummary(account1.movements);
+
 const user = 'Steven Tomas Williams'; // stw
 // Метод split() разбивает объект String на массив строк путём разделения строки указанной подстрокой.
 // Метод join() объединяет все элементы массива (или массивоподобного объекта) в строку.
@@ -90,7 +123,6 @@ const createUsermanes = function (accs) {
       .join('');
   });
 };
-
 createUsermanes(accounts);
 
 /////////////////////////////////////////////////
@@ -282,10 +314,61 @@ const movementsDescription = movements.map(
 console.log(movementsDescription); // return array with strings
 
 
-*/
+
 
 const deposits = movements.filter((mov, i, arr) => mov > 0);
 console.log(deposits);
 
 const withdrawals = movements.filter(el => el < 0);
 console.log(withdrawals);
+
+
+
+//
+// REDUCE METHOD
+/////////////////////////////
+console.log(movements);
+// const balance = movements.reduce((accumulator, el, i, arr) => {
+//   return accumulator + el;
+// }, 0);
+const balance = movements.reduce(
+  (accumulator, el, i, arr) => accumulator + el,
+  0
+);
+console.log(balance); // 3840 - number
+
+
+
+
+// Maximum value of movements array
+const maximumMovement = movements.reduce((accumulator, movement) => {
+  if (accumulator > movement) return accumulator;
+  else return movement;
+}, movements.at());
+console.log(maximumMovement);
+
+
+
+// Challenge # 2
+const calcAverageHumanAge = function (ages) {
+  const humanAges = ages.map((el, i, arr) => (el <= 2 ? 2 * el : 16 + el * 4));
+  const adults = humanAges.filter((el, i, arr) => el >= 18);
+  const average = adults.reduce((acc, el, i, arr) => acc + el / arr.length, 0);
+  return average;
+};
+console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
+
+
+*/
+// Truboprovod
+
+const eurToUsd = 1.1;
+const totalDepositUSD = movements
+  .filter(mov => mov > 0)
+  .map((mov, i, arr) => {
+    console.log(arr); // for debugging
+    return mov * eurToUsd;
+  })
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totalDepositUSD); // 5522.000000000001
