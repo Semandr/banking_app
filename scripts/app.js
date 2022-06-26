@@ -78,6 +78,21 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+const user = 'Steven Tomas Williams'; // stw
+// Метод split() разбивает объект String на массив строк путём разделения строки указанной подстрокой.
+// Метод join() объединяет все элементы массива (или массивоподобного объекта) в строку.
+const createUsermanes = function (accs) {
+  accs.forEach(acc => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(el => el.at())
+      .join('');
+  });
+};
+
+createUsermanes(accounts);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -88,7 +103,7 @@ displayMovements(account1.movements);
 //   ['GBP', 'Pound sterling'],
 // ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 // let arr = ['a', 'b', 'c', 'd', 'e'];
@@ -220,7 +235,7 @@ currenciesUnique.forEach((value, _, map) => {
 // app.js:199 GBP: GBP
 // app.js:199 EUR: EUR
 
-*/
+
 
 // Challenge 1
 function checkDogs(arr1, arr2) {
@@ -236,3 +251,41 @@ function checkDogs(arr1, arr2) {
 checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
 console.log(`------- next call ------`);
 checkDogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);
+
+
+
+
+//
+// MAP METHOD
+/////////////////////////////
+
+const usdToEuro = 1.1;
+
+const movementsEuro = movements.map(mov => mov * usdToEuro);
+console.log(movements);
+console.log(movementsEuro);
+
+// classic
+const movementsEuro2 = [];
+for (const mov of movements) {
+  movementsEuro2.push(mov * usdToEuro);
+}
+console.log(movementsEuro2);
+
+const movementsDescription = movements.map(
+  (mov, i, _) =>
+    `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
+      mov
+    )}`
+);
+
+console.log(movementsDescription); // return array with strings
+
+
+*/
+
+const deposits = movements.filter((mov, i, arr) => mov > 0);
+console.log(deposits);
+
+const withdrawals = movements.filter(el => el < 0);
+console.log(withdrawals);
