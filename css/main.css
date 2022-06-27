@@ -166,6 +166,7 @@ a:active {
   gap: 2rem;
   transition: all 0.8s ease;
   margin: 0 auto;
+  opacity: 0;
 }
 
 .balance {

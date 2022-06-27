@@ -35,31 +35,32 @@ const account4 = {
 
 const accounts = [account1, account2, account3, account4];
 
+/////////////////////////////////////////////////
 // Elements
-const labelWelcome = document.querySelector('.welcome');
+const labelWelcome = document.querySelector('.title__welcome');
 const labelDate = document.querySelector('.date');
 const labelBalance = document.querySelector('.balance__value');
 const labelSumIn = document.querySelector('.summary__value_in');
 const labelSumOut = document.querySelector('.summary__value_out');
 const labelSumInterest = document.querySelector('.summary__value_interest');
-const labelTimer = document.querySelector('.timer');
+const labelTimer = document.querySelector('.logout__timer');
 
 const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements');
 
-const btnLogin = document.querySelector('.login__btn');
-const btnTransfer = document.querySelector('.form__btn--transfer');
-const btnLoan = document.querySelector('.form__btn--loan');
-const btnClose = document.querySelector('.form__btn--close');
-const btnSort = document.querySelector('.btn--sort');
+const btnLogin = document.querySelector('.btn__login');
+const btnTransfer = document.querySelector('.transfer__btn');
+const btnLoan = document.querySelector('.loan__btn');
+const btnClose = document.querySelector('.close__btn');
+const btnSort = document.querySelector('.btn__sort');
 
-const inputLoginUsername = document.querySelector('.login__input--user');
-const inputLoginPin = document.querySelector('.login__input--pin');
-const inputTransferTo = document.querySelector('.form__input--to');
-const inputTransferAmount = document.querySelector('.form__input--amount');
-const inputLoanAmount = document.querySelector('.form__input--loan-amount');
-const inputCloseUsername = document.querySelector('.form__input--user');
-const inputClosePin = document.querySelector('.form__input--pin');
+const inputLoginUsername = document.querySelector('.login__user');
+const inputLoginPin = document.querySelector('.login__pin');
+const inputTransferTo = document.querySelector('.transfer__to');
+const inputTransferAmount = document.querySelector('.transfer__amount');
+const inputLoanAmount = document.querySelector('.loan__amount');
+const inputCloseUsername = document.querySelector('.close__user');
+const inputClosePin = document.querySelector('.close__pin');
 
 //////
 const displayMovements = function (movements) {
@@ -76,7 +77,6 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
 
 const calcAndDisplayBalance = function (movements) {
   const balance = movements.reduce(
@@ -85,20 +85,19 @@ const calcAndDisplayBalance = function (movements) {
   );
   labelBalance.textContent = `${balance} €`;
 };
-calcAndDisplayBalance(account1.movements);
 
-const calcAndDisplaySummary = function (movements) {
-  const income = movements
+const calcAndDisplaySummary = function (account) {
+  const income = account.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
 
-  const outcome = movements
+  const outcome = account.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
 
-  const interest = movements
+  const interest = account.movements
     .filter(mov => mov > 0)
-    .map(deposit => (deposit * 1.2) / 100)
+    .map(deposit => (deposit * account.interestRate) / 100)
     // .filter((int, i, arr) => {
     //   console.log(arr);
     //   return int >= 1;
@@ -109,7 +108,6 @@ const calcAndDisplaySummary = function (movements) {
   labelSumOut.textContent = `${outcome} €`;
   labelSumInterest.textContent = `${interest} €`;
 };
-calcAndDisplaySummary(account1.movements);
 
 const user = 'Steven Tomas Williams'; // stw
 // Метод split() разбивает объект String на массив строк путём разделения строки указанной подстрокой.
@@ -124,6 +122,38 @@ const createUsermanes = function (accs) {
   });
 };
 createUsermanes(accounts);
+
+// Event handler
+let currentAccount;
+
+btnLogin.addEventListener('click', e => {
+  e.preventDefault();
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  if (currentAccount?.pin === +inputLoginPin.value) {
+    // Display Ui and welcome
+    labelWelcome.textContent = `Welcome back ${currentAccount.owner
+      .split(' ')
+      .at()}`;
+    containerApp.style.opacity = 1;
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
+
+    // Display movements
+    displayMovements(currentAccount.movements);
+    // Display balance
+    calcAndDisplayBalance(currentAccount.movements);
+    // Display summary
+    calcAndDisplaySummary(currentAccount);
+  }
+});
+
+btnTransfer.addEventListener('click', e => {
+  e.preventDefault();
+  const amount = +inputTransferAmount.value;
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -360,15 +390,51 @@ console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
 console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
 
 
-*/
 // Truboprovod
 
 const eurToUsd = 1.1;
 const totalDepositUSD = movements
-  .filter(mov => mov > 0)
-  .map((mov, i, arr) => {
-    console.log(arr); // for debugging
-    return mov * eurToUsd;
-  })
-  .reduce((acc, mov) => acc + mov, 0);
+.filter(mov => mov > 0)
+.map((mov, i, arr) => {
+  console.log(arr); // for debugging
+  return mov * eurToUsd;
+})
+.reduce((acc, mov) => acc + mov, 0);
 console.log(totalDepositUSD); // 5522.000000000001
+
+
+///////////////////////////////
+// Challenge # 3
+// Use chaing method and arrow function
+
+// const calcAverageHumanAge = function (ages) {
+//   const humanAges = ages.map((el, i, arr) => (el <= 2 ? 2 * el : 16 + el * 4));
+//   const adults = humanAges.filter((el, i, arr) => el >= 18);
+//   const average = adults.reduce((acc, el, i, arr) => acc + el / arr.length, 0);
+//   return average;
+// };
+
+const calcAverageHumanAge = ages =>
+  ages
+    .map(el => (el <= 2 ? 2 * el : 16 + el * 4))
+    .filter(el => el >= 18)
+    .reduce((acc, el, i, arr) => acc + el / arr.length, 0);
+
+console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+console.log(calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]));
+
+
+
+
+//
+// FIND METHOD
+/////////////////////////////
+// return only first element which satisfact this condition, NOT new array
+const firstWitdrawal = movements.find(mov => mov < 0);
+console.log(firstWitdrawal);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+
+
+*/
