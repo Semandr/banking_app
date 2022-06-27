@@ -63,9 +63,12 @@ const inputCloseUsername = document.querySelector('.close__user');
 const inputClosePin = document.querySelector('.close__pin');
 
 //////
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = ``;
-  movements.forEach((mov, i) => {
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach((mov, i) => {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
     <li class="movements__row">
@@ -78,12 +81,12 @@ const displayMovements = function (movements) {
   });
 };
 
-const calcAndDisplayBalance = function (movements) {
-  const balance = movements.reduce(
+const calcAndDisplayBalance = function (account) {
+  account.balance = account.movements.reduce(
     (accumulator, movement) => accumulator + movement,
     0
   );
-  labelBalance.textContent = `${balance} €`;
+  labelBalance.textContent = `${account.balance} €`;
 };
 
 const calcAndDisplaySummary = function (account) {
@@ -123,6 +126,15 @@ const createUsermanes = function (accs) {
 };
 createUsermanes(accounts);
 
+const updateUI = function (account) {
+  // Display movements
+  displayMovements(account.movements);
+  // Display balance
+  calcAndDisplayBalance(account);
+  // Display summary
+  calcAndDisplaySummary(account);
+};
+
 // Event handler
 let currentAccount;
 
@@ -141,18 +153,66 @@ btnLogin.addEventListener('click', e => {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
-    // Display movements
-    displayMovements(currentAccount.movements);
-    // Display balance
-    calcAndDisplayBalance(currentAccount.movements);
-    // Display summary
-    calcAndDisplaySummary(currentAccount);
+    // Update UI
+    updateUI(currentAccount);
   }
 });
 
 btnTransfer.addEventListener('click', e => {
   e.preventDefault();
   const amount = +inputTransferAmount.value;
+  const receiverAcc = accounts.find(
+    account => account.username === inputTransferTo.value
+  );
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    // doing transfer
+    console.log(currentAccount);
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    // Update UI
+    updateUI(currentAccount);
+  }
+  // clear fields
+  inputTransferAmount.value = inputTransferTo.value = '';
+});
+
+btnLoan.addEventListener('click', e => {
+  e.preventDefault();
+  const amount = +inputLoanAmount.value;
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+  }
+  inputLoanAmount.value = '';
+});
+
+btnClose.addEventListener('click', e => {
+  e.preventDefault();
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    +inputClosePin.value === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      account => account.username === currentAccount.username
+    );
+    accounts.splice(index, 1);
+    inputCloseUsername.value = inputClosePin.value = '';
+    containerApp.style.opacity = 0;
+  }
+});
+
+let sorted = false;
+
+btnSort.addEventListener('click', e => {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 
 /////////////////////////////////////////////////
@@ -435,6 +495,63 @@ console.log(firstWitdrawal);
 
 const account = accounts.find(acc => acc.owner === 'Jessica Davis');
 console.log(account);
+
+
+
+
+//
+// SOME AND EVERY METHOD
+/////////////////////////////
+console.log(movements);
+console.log(movements.includes(-130)); // testing for equality
+
+// testing for condition:
+const anyDeposit = movements.some(mov => mov > 0);
+console.log(anyDeposit); // true
+
+// testing for ALL conditions
+console.log(account1.movements.every(mov => mov > 0)); // false
+console.log(account4.movements.every(mov => mov > 0)); // true
+
+// Separate callback
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit)); // true
+
+
+//
+// FLAT AND FLATMAP METHOD
+/////////////////////////////
+
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+console.log(accounts.flatMap(acc => acc.movements)); // (29) [200, 450, -400, 3000, -650, -130, 70, 1300, 5000, 3400, -150, -790, -3210, -1000, 8500, -30, 200, -200, 340, -300, -20, 50, 400, -460, 430, 1000, 700, 50, 90]
+console.log(
+  accounts.flatMap(acc => acc.movements).reduce((acc, mov) => acc + mov, 0)
+); // 17840 - as number
+
+
+
+//
+// SORT METHOD
+/////////////////////////////
+// MUTATE ORIGINAL ARRAY
+const owners = ['Jonas', 'Zack', 'Adam', 'Martha'];
+console.log(owners.sort());
+['Adam', 'Jonas', 'Martha', 'Zack'];
+
+// return < 0, A, B (keep order)
+// return > 0, B, A (switch order)
+
+// movements.sort((a, b) => {
+//   if (a > b) {
+//     return 1;
+//   } else {
+//     return -1;
+//   }
+// });
+movements.sort((a, b) => a - b);
+console.log(movements);
 
 
 */
