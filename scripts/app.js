@@ -554,4 +554,92 @@ movements.sort((a, b) => a - b);
 console.log(movements);
 
 
+
+//
+// ARRAYS PROGRAMMATICALLY
+/////////////////////////////
+const arr = [1, 2, 3, 4, 5, 6, 7];
+
+// epmpty array with fill()
+const x = new Array(7);
+console.log(x); // [empty × 7]
+x.fill(5);
+console.log(x); // (7) [5, 5, 5, 5, 5, 5, 5]
+
+arr.fill(77, 4, 6);
+console.log(arr); // [1, 2, 3, 4, 77, 77, 7]
+
+// Array.from
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y); // [1, 1, 1, 1, 1, 1, 1]
+
+const h = Array.from({ length: 7 }, ( _, i) => ++i);
+console.log(h); // [1, 2, 3, 4, 5, 6, 7]
+
+// let random = Math.random() * 6;
+const diceRolls = Array.from(
+  { length: 100 },
+  (_, i) => (i = Math.trunc(Math.random() * 6 + 1))
+);
+console.log(diceRolls); // (100) [6, 6, 6, 2, 3, 2, 6, 6, 3, 4, 5, 2, 4, 4, 2, 1, 4, 5, 2, 5, 6, 4, 3, 6, 1, 3, 3, 6, 3, 5, 1, 6, 1, 1, 6, 3, 5, 1, 1, 6, 2, 5, 6, 1, 5, 4, 3, 4, 5, 1, 1, 3, 2, 5, 3, 2, 4, 4, 1, 1, 4, 2, 1, 5, 6, 4, 5, 3, 4, 4, 6, 5, 3, 4, 4, 1, 1, 3, 2, 6, 5, 2, 6, 4, 2, 3, 2, 4, 1, 6, 3, 6, 6, 5, 2, 6, 6, 5, 4, 5]
+
+labelBalance.addEventListener('click', e => {
+  e.preventDefault();
+
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => +el.textContent.replace('€', '')
+  );
+  console.log(movementsUI); // (8) [1300, 70, -130, -650, 3000, -400, 450, 200]
+});
+
+
 */
+
+//
+// ARRAYS PRACTICE
+/////////////////////////////
+// 1.
+const bankDepositSum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((acc, mov) => mov + acc, 0);
+
+console.log(bankDepositSum); // 25180
+
+// 2.
+// const numDeposits1k = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(mov => mov > 1000).length;
+// console.log(numDeposits1k); // 5
+const numDeposits1k = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => (mov >= 1000 ? ++acc : acc), 0);
+console.log(numDeposits1k); // 6
+
+// 3.
+const { deposits, withdrawals } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (acc, el) => {
+      // el > 0 ? (acc.deposits += el) : (acc.withdrawals += el);
+      acc[el > 0 ? 'deposits' : 'withdrawals'] += el;
+      return acc;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+console.log(deposits, withdrawals);
+
+// 4.
+const convertTitleCase = function (title) {
+  const exeptions = ['a', 'an', 'the', 'but', 'for', 'or', 'in'];
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word =>
+      exeptions.includes(word) ? word : word.at().toUpperCase() + word.slice(1)
+    )
+    .join(' ');
+  return titleCase;
+};
+console.log(convertTitleCase('this is a nice TITLE'));
